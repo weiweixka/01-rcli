@@ -2,10 +2,12 @@
 
 //use std::process::Output;
 
+//use std::process;
+
 //命令行参数解析器clap
 use clap::Parser;
 //引入库文件
-use rcli::{Opts, SubCommand, process_csv};
+use rcli::{Opts, SubCommand, process_csv, process_genpass};
 
 fn main() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
@@ -17,6 +19,15 @@ fn main() -> anyhow::Result<()> {
                 format!("output.{}", csv_opts.format)
             };
             process_csv(&csv_opts.input, output, csv_opts.format)?;
+        }
+        SubCommand::GenPass(opts) => {
+            process_genpass(
+                opts.length,
+                opts.uppercase,
+                opts.lowercase,
+                opts.numbers,
+                opts.symbol,
+            )?;
         }
     }
     Ok(())
