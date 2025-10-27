@@ -67,7 +67,7 @@ pub fn process_genpass(
 
     //输出生成的密码
     let password = String::from_utf8(password)?;
-    println!("生成的随机密码: {}", password);
+    println!("{}", password);
 
     //评估密码强度
     let estimate = zxcvbn(&password, &[]);
