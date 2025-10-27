@@ -2,7 +2,7 @@ use rand::prelude::*;
 use zxcvbn::zxcvbn;
 
 const UPPER: &[u8] = b"ABCDEFGHIJKLMNPQRSTUVWXYZ";
-const LOWER: &[u8] = b"abcdefghijkmnopqrstuvwxyz";
+const LOWER: &[u8] = b"abcdefghijkmnpqrstuvwxyz";
 const NUMBER: &[u8] = b"23456789";
 const SYMBOL: &[u8] = b"!@#$%^&*";
 
