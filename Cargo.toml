@@ -7,8 +7,14 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+#错误处理库
 anyhow = "1.0.100"
+#命令行参数解析库
 clap = { version = "4.5.50", features = ["derive"] }
+#CSV文件处理库
 csv = "1.4.0"
+#序列化与反序列化库
 serde = { version = "1.0.228", features = ["derive"] }
+#JSON处理库
 serde_json = "1.0.145"
+serde_yaml = "0.9.34"
