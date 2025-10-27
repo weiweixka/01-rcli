@@ -1,4 +1,5 @@
 use rand::prelude::*;
+use zxcvbn::zxcvbn;
 
 const UPPER: &[u8] = b"ABCDEFGHIJKLMNPQRSTUVWXYZ";
 const LOWER: &[u8] = b"abcdefghijkmnopqrstuvwxyz";
@@ -53,6 +54,7 @@ pub fn process_genpass(
         );
     }
 
+    //确保密码长度足够
     for _ in 0..(length - password.len() as u8) {
         let c = chars
             .choose(&mut rng)
@@ -60,8 +62,16 @@ pub fn process_genpass(
         password.push(*c);
     }
 
+    //打乱密码顺序
     password.shuffle(&mut rng);
 
-    println!("生成的随机密码: {}", String::from_utf8(password)?);
+    //输出生成的密码
+    let password = String::from_utf8(password)?;
+    println!("{}", password);
+
+    //评估密码强度
+    let estimate = zxcvbn(&password, &[]);
+    eprintln!("密码强度评估: {}", estimate.score());
+
     Ok(())
 }
