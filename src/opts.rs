@@ -16,6 +16,8 @@ pub struct Opts {
 pub enum SubCommand {
     #[command(name = "csv", about = "Show CSV, or convert CSV to other formats")]
     Csv(CsvOpts),
+    #[command(name = "genpass", about = "Generate a random password")]
+    GenPass(GenPassOpts),
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -46,6 +48,25 @@ pub struct CsvOpts {
     //是否包含表头参数，默认值true
     #[arg(long, default_value_t = true)]
     pub header: bool,
+}
+
+#[derive(Debug, Parser)]
+pub struct GenPassOpts {
+    //密码长度参数，默认值16
+    #[arg(short, long, default_value_t = 16)]
+    pub length: u8,
+    //是否包含特殊字符参数，默认值true
+    #[arg(long, default_value_t = true)]
+    pub uppercase: bool,
+    //是否包含小写字母参数，默认值true
+    #[arg(long, default_value_t = true)]
+    pub lowercase: bool,
+    //是否包含数字参数，默认值true
+    #[arg(long, default_value_t = true)]
+    pub numbers: bool,
+    //是否包含符号参数，默认值true
+    #[arg(long, default_value_t = true)]
+    pub symbol: bool,
 }
 
 //验证输入文件是否存在
