@@ -1,24 +1,8 @@
-//接收命令行参数
 use clap::Parser;
 use core::fmt;
-use std::{path::Path, str::FromStr};
+use std::str::FromStr;
 
-//定义命令行参数结构体
-#[derive(Debug, Parser)]
-#[command(name = "rcli", version, author, about, long_about = None)]
-pub struct Opts {
-    #[command(subcommand)]
-    pub cmd: SubCommand,
-}
-
-//定义子命令枚举
-#[derive(Debug, Parser)]
-pub enum SubCommand {
-    #[command(name = "csv", about = "Show CSV, or convert CSV to other formats")]
-    Csv(CsvOpts),
-    #[command(name = "genpass", about = "Generate a random password")]
-    GenPass(GenPassOpts),
-}
+use super::verfiy_input_file;
 
 #[derive(Debug, Clone, Copy)]
 pub enum OutputFormat {
@@ -48,34 +32,6 @@ pub struct CsvOpts {
     //是否包含表头参数，默认值true
     #[arg(long, default_value_t = true)]
     pub header: bool,
-}
-
-#[derive(Debug, Parser)]
-pub struct GenPassOpts {
-    //密码长度参数，默认值16
-    #[arg(short, long, default_value_t = 16)]
-    pub length: u8,
-    //是否包含特殊字符参数，默认值true
-    #[arg(long, default_value_t = true)]
-    pub uppercase: bool,
-    //是否包含小写字母参数，默认值true
-    #[arg(long, default_value_t = true)]
-    pub lowercase: bool,
-    //是否包含数字参数，默认值true
-    #[arg(long, default_value_t = true)]
-    pub numbers: bool,
-    //是否包含符号参数，默认值true
-    #[arg(long, default_value_t = true)]
-    pub symbol: bool,
-}
-
-//验证输入文件是否存在
-fn verfiy_input_file(filename: &str) -> Result<String, String> {
-    if Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("文件不存在，请重新选择文件！".into())
-    }
 }
 
 //解析输出格式参数
