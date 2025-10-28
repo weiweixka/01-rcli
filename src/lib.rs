@@ -1,5 +1,5 @@
-mod opts;
+mod cliopts;
 mod process;
 
-pub use opts::{Opts, SubCommand};
+pub use cliopts::*;
 pub use process::*;
