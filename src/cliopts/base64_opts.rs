@@ -1,7 +1,7 @@
 use core::fmt;
 use std::str::FromStr;
 
-use super::verfiy_input_file;
+use super::verfiy_file;
 use clap::Parser;
 
 //定义Base64子命令枚举
@@ -16,7 +16,7 @@ pub enum Base64SubCommand {
 //定义Base64编码子命令的参数结构体
 #[derive(Debug, Parser)]
 pub struct Base64EncodeOpts {
-    #[arg(short, long, value_parser = verfiy_input_file,default_value = "-")]
+    #[arg(short, long, value_parser = verfiy_file,default_value = "-")]
     pub input: String,
     #[arg(long, value_parser =parse_base64_format,default_value = "Standard")]
     pub format: Base64Format,
@@ -25,7 +25,7 @@ pub struct Base64EncodeOpts {
 //定义Base64解码子命令的参数结构体
 #[derive(Debug, Parser)]
 pub struct Base64DecodeOpts {
-    #[arg(short, long, value_parser = verfiy_input_file,default_value = "-")]
+    #[arg(short, long, value_parser = verfiy_file,default_value = "-")]
     pub input: String,
     #[arg(long, value_parser =parse_base64_format,default_value = "Standard")]
     pub format: Base64Format,

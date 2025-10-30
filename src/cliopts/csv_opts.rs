@@ -2,7 +2,7 @@ use clap::Parser;
 use core::fmt;
 use std::str::FromStr;
 
-use super::verfiy_input_file;
+use super::verfiy_file;
 
 #[derive(Debug, Clone, Copy)]
 pub enum OutputFormat {
@@ -14,7 +14,7 @@ pub enum OutputFormat {
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
     //输入文件参数，必须存在
-    #[arg(short, long,value_parser = verfiy_input_file )]
+    #[arg(short, long,value_parser = verfiy_file )]
     pub input: String,
 
     //输出文件参数，默认值output01.json
@@ -57,7 +57,7 @@ impl FromStr for OutputFormat {
         match s {
             "json" => Ok(OutputFormat::Json),
             "yaml" => Ok(OutputFormat::Yaml),
-            _ => Err(anyhow::anyhow!("不支持的输出格式: {}", s)),
+            _ => Err(anyhow::anyhow!("不支持的输出格式为: {}", s)),
         }
     }
 }

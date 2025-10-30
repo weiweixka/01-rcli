@@ -1,14 +1,16 @@
 mod base64_opts;
 mod csv_opts;
 mod password_opts;
+mod text;
 
+use clap::Parser;
 use std::path::Path;
 
-pub use base64_opts::{Base64Format, Base64SubCommand};
-use clap::Parser;
-use csv_opts::CsvOpts;
-pub use csv_opts::OutputFormat;
-
+pub use self::{
+    base64_opts::{Base64Format, Base64SubCommand},
+    csv_opts::{CsvOpts, OutputFormat},
+    text::{TextSignFormat, TextSubCommand, TextVerifyOpts},
+};
 use crate::cliopts::password_opts::GenPassOpts;
 
 //定义命令行参数结构体
@@ -28,10 +30,12 @@ pub enum SubCommand {
     GenPass(GenPassOpts),
     #[command(subcommand)]
     Base64(Base64SubCommand),
+    #[command(subcommand)]
+    Text(TextSubCommand),
 }
 
 //验证输入文件是否存在
-fn verfiy_input_file(filename: &str) -> Result<String, &'static str> {
+fn verfiy_file(filename: &str) -> Result<String, &'static str> {
     //if input is "-" (标准输入) or file exists, return Ok
     if filename == "-" || Path::new(filename).exists() {
         Ok(filename.into())
@@ -47,11 +51,11 @@ mod tests {
 
     #[test]
     fn test_verfiy_input_file() {
-        assert_eq!(verfiy_input_file("-"), Ok("-".into()));
-        assert_eq!(verfiy_input_file("*"), Err("文件不存在，请重新选择文件！"));
-        assert_eq!(verfiy_input_file("Cargo.toml"), Ok("Cargo.toml".into()));
+        assert_eq!(verfiy_file("-"), Ok("-".into()));
+        assert_eq!(verfiy_file("*"), Err("文件不存在，请重新选择文件！"));
+        assert_eq!(verfiy_file("Cargo.toml"), Ok("Cargo.toml".into()));
         assert_eq!(
-            verfiy_input_file("non_exist"),
+            verfiy_file("non_exist"),
             Err("文件不存在，请重新选择文件！")
         );
     }
